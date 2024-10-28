@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import "./table.scss";
 import { useLocation } from "react-router-dom";
+import "./table.scss";
 
 const Table = () => {
   const [categories, setCategories] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
   const location = useLocation()?.pathname;
+
   async function GetCatigoriesAPI() {
     try {
       const response = await axios.get(
@@ -24,9 +27,32 @@ const Table = () => {
 
   useEffect(() => {
     GetCatigoriesAPI();
-  }, []);
+  }, [location]);
 
-  console.log(categories);
+  const totalPages = Math.ceil(categories.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  // Sahifada ko‘rsatiladigan elementlar
+  const displayedCategories = categories.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   async function DeleteCatigories(itemID) {
     const token = localStorage.getItem("token");
     try {
@@ -39,7 +65,7 @@ const Table = () => {
         }
       );
       toast.success("Element Deleted", { autoClose: 1500 });
-      GetCatigoriesAPI(); // Jadvalni yangilash uchun qayta yuklaymiz
+      GetCatigoriesAPI();
     } catch {
       toast.error("Can't delete this item", { autoClose: 1500 });
     }
@@ -58,13 +84,13 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {categories.map((elem) => (
+          {displayedCategories.map((elem) => (
             <tr className="table__row" key={elem.id}>
               <td className="table__cell">{elem.name_en}</td>
               <td className="table__cell">{elem.name_ru}</td>
               <td className="table__cell">
                 <img
-                  src={`https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/${elem?.image_src}`} // tasvir manzili to‘g‘ri kelishiga e'tibor bering
+                  src={`https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/${elem?.image_src}`}
                   alt={elem.name_en}
                   className="table__image"
                 />
@@ -84,6 +110,35 @@ const Table = () => {
           ))}
         </tbody>
       </table>
+
+      {/* Pagination */}
+      <div className="pagination">
+        <button
+          className="pagination__button"
+          onClick={handlePrev}
+          disabled={currentPage === 1}
+        >
+          Prev
+        </button>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            className={`pagination__button ${
+              currentPage === index + 1 ? "pagination__button--active" : ""
+            }`}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button
+          className="pagination__button"
+          onClick={handleNext}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };
