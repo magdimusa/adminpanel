@@ -1,0 +1,50 @@
+.sidebar {
+  width: auto;
+  background: rgb(0, 21, 41);
+  padding: 30px 0 0;
+  &__header {
+    font-size: 24px;
+    text-align: center;
+    padding: 0 25px 15px;
+  }
+  &__title {
+    color: #bbb;
+    transition: all 0.3s;
+    &:hover {
+      color: #fff;
+    }
+  }
+  &__menu {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  &__item {
+    width: 90%;
+    margin: 0 auto;
+    button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      width: 100%;
+      border: none;
+      outline: none;
+      padding: 12px 40px;
+      background: inherit;
+      color: #aaa;
+      border-radius: 10px;
+      transition: all 0.3s;
+      &:hover {
+        cursor: pointer;
+        color: #fff;
+      }
+    }
+  }
+}
+.focus {
+  transition: all 0.3s;
+  background: #1677ff !important;
+  color: #fff !important;
+}

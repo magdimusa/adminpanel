@@ -1,0 +1,12 @@
+.layout {
+  width: 100%;
+  display: flex;
+  &-wrapper {
+    width: 100%;
+  }
+  &-container {
+    padding: 40px;
+    width: 100%;
+    background: #add;
+  }
+}
