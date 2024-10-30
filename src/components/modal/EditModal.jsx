@@ -4,7 +4,7 @@ import "./modal.scss";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-function EditModal({ handleModal, category, GetCatigoriesAPI }) {
+function Editmodal({ handleModal, category, GetCatigoriesAPI }) {
   const [nameEn, setNameEn] = useState("");
   const [nameRu, setNameRu] = useState("");
   const [image, setImage] = useState(null);
@@ -121,4 +121,4 @@ function EditModal({ handleModal, category, GetCatigoriesAPI }) {
   );
 }
 
-export default EditModal;
+export default Editmodal;
