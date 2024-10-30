@@ -1,13 +1,13 @@
 import React from "react";
 import Table from "../components/table/Table";
 
-const Models = () => {
+const Cities = () => {
   return (
     <div>
-      <h1 className="categories">Models</h1>
+      <h1 className="categories">Cities</h1>
       <Table />
     </div>
   );
 };
 
-export default Models;
+export default Cities;
