@@ -1,5 +1,6 @@
 .modal {
   &__overlay {
+    padding: 95px 0;
     position: fixed;
     top: 0;
     left: 0;
@@ -13,6 +14,11 @@
   }
 
   &__content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    overflow-y: auto;
     background-color: #fefefe;
     padding: 20px 30px;
     border-radius: 10px;
@@ -57,7 +63,7 @@
   &__form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
   }
 
   &__label {
@@ -68,7 +74,7 @@
   }
 
   &__input {
-    margin-top: 8px;
+    margin-top: 10px;
     padding: 10px;
     border: 1px solid #aaa;
     border-radius: 5px;
@@ -114,6 +120,48 @@
       &:hover {
         background-color: #c82333;
       }
+    }
+  }
+}
+.inclusive-switch {
+  user-select: none;
+  &__input {
+    display: none;
+  }
+  &__slider {
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
+    position: relative;
+    width: 50px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    background-color: #ccc;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    &:hover {
+      background-color: #aaa;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      left: 5px;
+      width: 20px;
+      height: 20px;
+      background-color: #fff;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  &__input:checked + .inclusive-switch__slider {
+    background-color: #4caf50;
+    &:hover {
+      background-color: #339136;
+    }
+    &::before {
+      transform: translateX(20px);
     }
   }
 }

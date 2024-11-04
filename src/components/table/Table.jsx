@@ -45,7 +45,7 @@ const Table = () => {
         toast.warning("No data", { autoClose: 1500 });
       }
     } catch (error) {
-      toast.error("Failed to fetch categories", { autoClose: 1500 });
+      toast.error(`Failed to fetch ${location.slice(1)}`, { autoClose: 1500 });
     }
   };
 
@@ -107,6 +107,7 @@ const Table = () => {
             <Modal
               GetCatigoriesAPI={GetCatigoriesAPI}
               handleModal={handleModal}
+              category={categories}
             />
           )}
           {editModal && (
@@ -141,15 +142,7 @@ const Table = () => {
                   <th className="table__header">Brand</th>
                   <th className="table__header">Action</th>
                 </tr>
-              ) : location === "/locations" ? (
-                <tr className="table__row">
-                  <th className="table__header">T/N</th>
-                  <th className="table__header">Name</th>
-                  <th className="table__header">Location</th>
-                  <th className="table__header">Image</th>
-                  <th className="table__header">Action</th>
-                </tr>
-              ) : location === "/cities" ? (
+              ) : location === "/locations" || location === "/cities" ? (
                 <tr className="table__row">
                   <th className="table__header">T/N</th>
                   <th className="table__header">Name</th>
@@ -184,7 +177,7 @@ const Table = () => {
                           className="table__image"
                         />
                       </td>
-                      <td className="table__cell">
+                      <td className="table__cell table__btns">
                         <button
                           className="table__button table__button--edit"
                           onClick={() => handleEditModal(elem)}
@@ -208,11 +201,11 @@ const Table = () => {
                       <td className="table__cell">
                         <img
                           src={`https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/${elem?.image_src}`}
-                          alt={elem.name_en}
+                          alt={elem.title}
                           className="table__image"
                         />
                       </td>
-                      <td className="table__cell">
+                      <td className="table__cell table__btns">
                         <button
                           className="table__button table__button--edit"
                           onClick={() => handleEditModal(elem)}
@@ -234,7 +227,7 @@ const Table = () => {
                       <td className="table__cell">{index + 1}</td>
                       <td className="table__cell">{elem.name}</td>
                       <td className="table__cell">{elem.brand_title}</td>
-                      <td className="table__cell">
+                      <td className="table__cell table__btns">
                         <button
                           className="table__button table__button--edit"
                           onClick={() => handleEditModal(elem)}
@@ -250,7 +243,7 @@ const Table = () => {
                       </td>
                     </tr>
                   ))
-                : location === "/locations"
+                : location === "/locations" || location === "/cities"
                 ? displayedCategories?.map((elem, index) => (
                     <tr className="table__row" key={elem.id}>
                       <td className="table__cell">{index + 1}</td>
@@ -259,40 +252,11 @@ const Table = () => {
                       <td className="table__cell">
                         <img
                           src={`https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/${elem?.image_src}`}
-                          alt={elem.name_en}
+                          alt={elem.text}
                           className="table__image"
                         />
                       </td>
-                      <td className="table__cell">
-                        <button
-                          className="table__button table__button--edit"
-                          onClick={() => handleEditModal(elem)}
-                        >
-                          ✏️
-                        </button>
-                        <button
-                          className="table__button table__button--delete"
-                          onClick={() => DeleteCatigories(elem.id)}
-                        >
-                          🗑️
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                : location === "/cities"
-                ? displayedCategories?.map((elem, index) => (
-                    <tr className="table__row" key={elem.id}>
-                      <td className="table__cell">{index + 1}</td>
-                      <td className="table__cell">{elem.name}</td>
-                      <td className="table__cell">{elem.text}</td>
-                      <td className="table__cell">
-                        <img
-                          src={`https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/${elem?.image_src}`}
-                          alt={elem.name_en}
-                          className="table__image"
-                        />
-                      </td>
-                      <td className="table__cell">
+                      <td className="table__cell table__btns">
                         <button
                           className="table__button table__button--edit"
                           onClick={() => handleEditModal(elem)}
@@ -318,7 +282,7 @@ const Table = () => {
                       <td className="table__cell">{elem.color}</td>
                       <td className="table__cell">{elem.city.name}</td>
 
-                      <td className="table__cell">
+                      <td className="table__cell table__btns">
                         <button
                           className="table__button table__button--edit"
                           onClick={() => handleEditModal(elem)}
