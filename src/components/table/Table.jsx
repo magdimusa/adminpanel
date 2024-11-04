@@ -7,7 +7,7 @@ import { GrFormPrevious } from "react-icons/gr";
 import { GrFormNext } from "react-icons/gr";
 import Loader from "../loader/Loader";
 import Modal from "../modal/Modal";
-import Editmodal from "../modal/Editmodal";
+import Edit from "../modal/Edit";
 
 const Table = () => {
   const [categories, setCategories] = useState([]);
@@ -111,7 +111,7 @@ const Table = () => {
             />
           )}
           {editModal && (
-            <Editmodal
+            <Edit
               GetCatigoriesAPI={GetCatigoriesAPI}
               category={selectedCategory}
               handleModal={closeEditModal}

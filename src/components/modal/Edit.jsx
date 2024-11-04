@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
 
-function Editmodal({ handleModal, category, GetCatigoriesAPI }) {
+function Edit({ handleModal, category, GetCatigoriesAPI }) {
   const [nameEn, setNameEn] = useState("");
   const [nameRu, setNameRu] = useState("");
   const [brand, setBrand] = useState("");
@@ -686,4 +686,4 @@ function Editmodal({ handleModal, category, GetCatigoriesAPI }) {
   );
 }
 
-export default Editmodal;
+export default Edit;
