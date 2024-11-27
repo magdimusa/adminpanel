@@ -7,13 +7,11 @@ import { toast } from "react-toastify";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
     const formData = new FormData();
@@ -22,7 +20,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "https://autoapi.dezinfeksiyatashkent.uz/api/auth/signin",
+        "https://autoapi.dezinfeksiyatashkent.uz/api/auth/signin", // API endpointni tekshiring!
         formData,
         {
           headers: {
@@ -31,16 +29,25 @@ function Login() {
         }
       );
 
-      if (response.data.success) {
-        const token = response.data.data.tokens.accessToken.token;
-        localStorage.setItem("token", token);
-        toast.success("You are logged in successfully!");
-        navigate("/");
+      if (response?.data?.success) {
+        const token = response?.data?.data?.tokens?.accessToken?.token;
+        if (token) {
+          localStorage.setItem("token", token);
+          toast.success("Siz muvaffaqiyatli tizimga kirdingiz!");
+          navigate("/");
+        } else {
+          throw new Error("Token mavjud emas!");
+        }
       } else {
         toast.error("Login yoki parol noto‘g‘ri!");
       }
     } catch (error) {
-      toast.error("Login yoki parol noto‘g‘ri!");
+      if (error.response?.status === 404) {
+        toast.error("API topilmadi. Endpointni tekshiring!");
+      } else {
+        toast.error("Login yoki parol noto‘g‘ri!");
+      }
+      console.error("Xatolik:", error);
     } finally {
       setLoading(false);
     }
@@ -53,7 +60,7 @@ function Login() {
         <form className="login__form" onSubmit={handleSubmit}>
           <div className="login__field">
             <label className="login__label" htmlFor="username">
-              Phone number:
+              Telefon raqami:
             </label>
             <input
               className="login__input"
@@ -66,7 +73,7 @@ function Login() {
           </div>
           <div className="login__field">
             <label className="login__label" htmlFor="password">
-              Password:
+              Parol:
             </label>
             <input
               className="login__input"
@@ -78,7 +85,7 @@ function Login() {
             />
           </div>
           <button className="login__button" type="submit" disabled={loading}>
-            {loading ? "Submitting..." : "Submit"}
+            {loading ? "Yuklanmoqda..." : "Kirish"}
           </button>
         </form>
       </div>
